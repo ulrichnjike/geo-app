@@ -25,7 +25,7 @@ pipeline {
             steps{ 
             sh 'curl -uadmin:AP61gPKMyRw3x4zYyDNwh7D7yvQ -T \
             target/bio*.jar \
-            "http://ec2-34-205-159-90.compute-1.amazonaws.com:8081/artifactory/geolocation/geo/bio_${BUILD_ID}.jar"'   
+            "http://ec2-18-206-204-221.compute-1.amazonaws.com:8081/artifactory/geolocation/geo/bio_${BUILD_ID}.jar"'   
             }
         }
         stage('docker login'){
@@ -38,6 +38,7 @@ pipeline {
         stage('docker image build'){
             steps{
                 sh'docker build -t my_docker_repo:v.${BUILD_ID} .'
+                sh'docker build -t my_docker_repo:latest .'
             }
         }
         stage('image tagging'){
@@ -50,9 +51,8 @@ pipeline {
         }
         stage('push image'){
             steps{
-                sh'docker tag my_docker_repo:latest \
-                844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:latest'
-                sh'docker tag my_docker_repo:latest \
+                sh'docker push \
+                844201119docker push \
                 844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:v.${BUILD_ID}'
             }
         }
