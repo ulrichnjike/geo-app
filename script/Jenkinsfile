@@ -45,15 +45,14 @@ pipeline {
             steps{
                 sh'docker tag my_docker_repo:latest \
                 844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:latest'
-                sh'docker tag my_docker_repo:latest \
+                sh'docker tag my_docker_repo:v.${BUILD_ID} \
                 844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:v.${BUILD_ID}'
             }
         }
         stage('push image'){
             steps{
-                sh'docker push \
-                844201119docker push \
-                844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:v.${BUILD_ID}'
+                sh'docker push 844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:latest'
+                sh'docker push 844201119545.dkr.ecr.us-east-1.amazonaws.com/my_docker_repo:v.${BUILD_ID}'
             }
         }
     }
